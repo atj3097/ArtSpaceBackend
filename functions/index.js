@@ -1,9 +1,11 @@
-const functions = require('firebase-functions');
+const functions = require('firebase-functions'); 
+const admin = require('firebase-admin'); 
+admin.initializeApp(); 
+// const logging = require('@google-cloud/logging')();
+const stripe = require('stripe')('sk_test_03keKEvzEQkLMwegjjqG5i8n00MFIzSWzB');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => { 
-    console.log('Is this connected')
- response.send("Hello from Firebase!");
-});
+exports.createStripeCustomer = functions.auth.user().onCreate(async (user) => {
+    const customer = await stripe.customers.create({email: user.email});
+    return admin.firestore().collection('stripe_customers').doc(user.uid).set({customer_id: customer.id});
+  });
+  
