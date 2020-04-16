@@ -1,4 +1,2 @@
 # ArtSpaceBackend
-## How It Works  
-- Evertime one of our users sign up, for our app Firebase saves a new user and creates a corresponding Stripe User for our app.   
-- 
+## This Node.JS project uses Firebase cloud functions to communicate with our Stripe API to create new Stripe users, save cards, charge cards, and keep track of payment history. 
